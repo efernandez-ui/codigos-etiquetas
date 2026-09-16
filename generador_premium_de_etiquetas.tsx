@@ -4,7 +4,7 @@ import JSZip from 'jszip';
 import { jsPDF } from 'jspdf';
 import 'svg2pdf.js';
 import { 
-  Settings, AlertCircle, Maximize, FileImage, 
+  Settings, AlertCircle, AlertTriangle, Maximize, FileImage, 
   CheckCircle2, Image as ImageIcon, List, Info, Table, 
   Plus, Trash2, Eraser, Printer, FileCode2, Archive, Loader2, FileText
 } from 'lucide-react';
@@ -46,6 +46,7 @@ const BarcodeGenerator = () => {
   const lineColor = '#000000';
 
   const [errors, setErrors] = useState({});
+  const [warnings, setWarnings] = useState({});
   const [toastMsg, setToastMsg] = useState("");
   const [isZipping, setIsZipping] = useState(false);
   
@@ -120,6 +121,7 @@ const BarcodeGenerator = () => {
     if (!isLoaded || !hiddenSvgContainerRef.current) return;
     
     const newErrors = {};
+    setWarnings({});
     hiddenSvgContainerRef.current.innerHTML = '';
     const validItems = items.filter(item => item.barcodeVal.trim() !== '' || item.sku.trim() !== '');
 
@@ -206,6 +208,25 @@ const BarcodeGenerator = () => {
             const barcodeX = (targetW - img.width) / 2;
             ctx.drawImage(img, barcodeX, currentY);
             URL.revokeObjectURL(url);
+
+            ctx.font = `bold ${skuFontSize}px Arial`;
+            const overflowingSku = skuLines.some(line => ctx.measureText(line).width > maxTextWidth);
+            ctx.font = `${descFontSize}px Arial`;
+            const overflowingDescription = descLines.some(line => ctx.measureText(line).width > maxTextWidth);
+            const overflowingText = overflowingSku || overflowingDescription;
+            const overflowingBarcode = barcodeX < 0 || barcodeX + img.width > targetW;
+            const overflowingHeight = currentY + img.height > targetH - 15;
+            const warningParts = [];
+            if (overflowingText) warningParts.push('el texto supera el ancho');
+            if (overflowingBarcode) warningParts.push('las barras superan el ancho');
+            if (overflowingHeight) warningParts.push('el contenido supera el alto');
+
+            if (warningParts.length > 0) {
+              setWarnings(previous => ({
+                ...previous,
+                [index]: `Revisa la etiqueta: ${warningParts.join(' y ')}.`,
+              }));
+            }
 
             layoutRefs.current[index] = {
                 finalBarcodeVal, skuLines, descLines, 
@@ -687,6 +708,11 @@ const BarcodeGenerator = () => {
                             <div className="w-full sm:w-36 bg-zinc-50 p-4 flex flex-col justify-center gap-2 shrink-0 border-t sm:border-t-0 sm:border-l border-zinc-100">
                               <p className="text-[10px] font-bold uppercase text-zinc-400 text-center mb-1">Exportar</p>
                               <div className="flex flex-col gap-2">
+                                {warnings[index] && (
+                                  <button onClick={() => showToast(warnings[index])} className="flex items-center justify-center gap-1.5 py-1.5 px-3 text-xs font-semibold text-red-800 bg-red-100 hover:bg-red-200 border border-red-300 rounded-lg transition-all shadow-sm" title={warnings[index]}>
+                                    <AlertTriangle size={14}/> Advertencia
+                                  </button>
+                                )}
                                 <button onClick={() => exportRasterToSize(index, 'image/png', 'png')} className="flex items-center justify-center gap-2 py-1.5 px-3 text-xs font-semibold text-zinc-700 bg-white hover:bg-rose-50 border border-zinc-200 hover:border-rose-200 hover:text-rose-600 rounded-lg transition-all shadow-sm">
                                     <FileImage size={14}/> PNG
                                 </button>
