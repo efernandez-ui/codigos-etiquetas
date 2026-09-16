@@ -556,7 +556,7 @@ const BarcodeGenerator = () => {
         <div className="grid grid-cols-1 lg:contents">
           
           {/* PANEL IZQUIERDO DE CONFIGURACIÓN */}
-          <div className="lg:col-start-1 lg:col-span-4 xl:col-span-3 lg:row-start-1 space-y-6">
+          <div className="lg:col-start-1 lg:col-span-4 xl:col-span-3 lg:row-start-1 lg:row-span-2 space-y-6">
             <div className="bg-white p-6 rounded-2xl shadow-xl shadow-zinc-200/40 border border-zinc-100">
               <div className="flex items-center gap-2 mb-6 text-zinc-800 font-bold text-lg border-b border-zinc-100 pb-4">
                 <Settings size={20} className="text-rose-600" />
