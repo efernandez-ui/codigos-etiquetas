@@ -604,7 +604,7 @@ const BarcodeGenerator = () => {
                         <h3>Dimensiones Físicas (cm)</h3>
                       </div>
                       
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 gap-3">
                       <div>
                         <div className="flex justify-between text-xs mb-1 text-zinc-600">
                           <label>Ancho Etiqueta</label>
@@ -629,7 +629,7 @@ const BarcodeGenerator = () => {
                         <h3>Proporciones del Código de Barras</h3>
                       </div>
                       
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 gap-3">
                       <div>
                         <div className="flex justify-between text-xs mb-1 text-zinc-500 font-medium">
                           <label>Ancho de barra (3-15px)</label><span>{barcodeWidthScale}px</span>
@@ -651,7 +651,7 @@ const BarcodeGenerator = () => {
                         <h3>Tipografías (15 a 150 px)</h3>
                       </div>
                       
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 gap-3">
                       <div>
                         <div className="flex justify-between text-xs mb-1 text-zinc-500 font-medium">
                           <label>Letra SKU</label><span>{skuFontSize}px</span>
