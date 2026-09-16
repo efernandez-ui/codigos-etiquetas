@@ -20,6 +20,28 @@ body {
   min-height: 100vh;
 }
 
+.app-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 24px;
+  background: #18181b;
+  position: relative;
+  z-index: 50;
+}
+.app-navigation button, .mother-button {
+  border: 1px solid #d4d4d8;
+  border-radius: 10px;
+  padding: 8px 13px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.app-navigation button { color: #fff; border-color: #52525b; background: transparent; }
+.app-navigation button[aria-current="page"] { color: #18181b; background: #fff; border-color: #fff; }
+.mother-button { display: inline-flex; align-items: center; gap: 6px; color: #7c2d12; background: #fff7ed; }
+.mother-button:hover:not(:disabled) { background: #ffedd5; }
+.mother-button:disabled { opacity: .5; cursor: not-allowed; }
+
 .bg-warm-gradient {
   background: linear-gradient(135deg, #fff1f2 0%, #fed7aa 48%, #ffedd5 100%);
 }
