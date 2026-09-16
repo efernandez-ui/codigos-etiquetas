@@ -578,7 +578,7 @@ const BarcodeGenerator = () => {
           
           {/* PANEL IZQUIERDO DE CONFIGURACIÓN */}
           <div className="lg:col-span-4 xl:col-span-3 space-y-6">
-            <div className="bg-white p-4 rounded-2xl shadow-xl shadow-zinc-200/40 border border-zinc-100 max-h-[750px] overflow-hidden">
+            <div className="bg-white p-4 rounded-2xl shadow-xl shadow-zinc-200/40 border border-zinc-100 max-h-[800px] overflow-hidden">
               <div className="flex items-center gap-2 mb-4 text-zinc-800 font-bold text-lg border-b border-zinc-100 pb-3">
                 <Settings size={20} className="text-rose-600" />
                     <h2>Diseño Global</h2>
