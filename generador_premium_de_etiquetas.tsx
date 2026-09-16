@@ -43,7 +43,7 @@ const BarcodeGenerator = () => {
 
   // Fondo y líneas fijos: blanco y negro estricto
   const bgColor = '#ffffff';
-  const lineColor = '#172033';
+  const lineColor = '#7f1d1d';
 
   const [errors, setErrors] = useState({});
   const [toastMsg, setToastMsg] = useState("");
@@ -454,7 +454,7 @@ const BarcodeGenerator = () => {
   const currentValidItems = items.filter(item => item.barcodeVal.trim() !== '' || item.sku.trim() !== '');
 
   return (
-    <div className="flex h-screen w-full bg-zinc-100 font-sans text-zinc-800 overflow-hidden">
+    <div className="flex h-screen w-full bg-orange-50 font-sans text-zinc-800 overflow-hidden">
       
       {toastMsg && (
         <div className="fixed bottom-6 right-6 bg-zinc-900 text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-2 z-50 animate-bounce">
@@ -467,7 +467,7 @@ const BarcodeGenerator = () => {
 
       <div className="flex-1 flex flex-col h-screen overflow-y-auto custom-scrollbar relative">
         
-        <header className="bg-white/80 backdrop-blur-md border-b border-zinc-200 px-8 py-5 flex items-center justify-between sticky top-0 z-40 shadow-sm">
+        <header className="bg-white border-b border-zinc-200 px-8 py-5 flex items-center justify-between sticky top-0 z-40 shadow-sm">
             <div className="flex items-center gap-3">
                 <div className="bg-rose-600 p-2 rounded-lg shadow-md shadow-rose-600/20">
                     <CheckCircle2 size={20} className="text-white"/>
@@ -670,9 +670,9 @@ const BarcodeGenerator = () => {
                       {currentValidItems.map((item, index) => (
                         <div key={`preview-${index}`} className="group bg-white border border-zinc-200 rounded-2xl shadow-sm hover:shadow-xl hover:shadow-zinc-200/50 transition-all overflow-hidden flex flex-col sm:flex-row items-center">
                           
-                          <div className="flex-1 p-6 flex items-center justify-center relative min-h-[180px] max-h-[400px] w-full bg-[length:24px_24px] border-b sm:border-b-0 sm:border-r border-zinc-100 overflow-auto" style={{ backgroundImage: 'radial-gradient(#e4e4e7 1px, transparent 1px)' }}>
+                          <div className="flex-1 p-6 flex items-center justify-center relative min-h-[180px] max-h-[400px] w-full bg-orange-50 border-b sm:border-b-0 sm:border-r border-zinc-100 overflow-auto">
                             {errors[index] ? (
-                              <div className="flex flex-col items-center text-rose-600 text-sm p-4 bg-white/95 backdrop-blur rounded-xl shadow-lg border border-rose-100">
+                              <div className="flex flex-col items-center text-rose-600 text-sm p-4 bg-white rounded-xl shadow-lg border border-rose-100">
                                 <AlertCircle size={28} className="mb-2 text-rose-500" />
                                 <span className="font-bold">{errors[index]}</span>
                               </div>

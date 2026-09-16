@@ -5,7 +5,7 @@
 :root {
   font-family: Arial, Helvetica, sans-serif;
   color: #27272a;
-  background: #fafafa;
+  background: #fff7ed;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
@@ -20,25 +20,25 @@ body {
   min-height: 100vh;
 }
 
-.bg-rose-600 { background-color: #0f766e; }
-.bg-rose-700 { background-color: #115e59; }
-.bg-rose-300 { background-color: #5eead4; }
-.bg-rose-100 { background-color: #ccfbf1; }
-.bg-rose-50 { background-color: #f0fdfa; }
+.bg-rose-600 { background-color: #c2410c; }
+.bg-rose-700 { background-color: #9a3412; }
+.bg-rose-300 { background-color: #fdba74; }
+.bg-rose-100 { background-color: #ffedd5; }
+.bg-rose-50 { background-color: #fff7ed; }
 .text-rose-700,
-.text-rose-600 { color: #0f766e; }
-.text-rose-500 { color: #0d9488; }
-.text-rose-400 { color: #14b8a6; }
-.border-rose-200 { border-color: #99f6e4; }
-.border-rose-100 { border-color: #ccfbf1; }
-.accent-rose-600 { accent-color: #0f766e; }
-.hover\:bg-rose-700:hover { background-color: #115e59; }
-.hover\:bg-rose-100:hover { background-color: #ccfbf1; }
-.hover\:bg-rose-50:hover { background-color: #f0fdfa; }
-.hover\:text-rose-600:hover { color: #0f766e; }
-.hover\:border-rose-200:hover { border-color: #99f6e4; }
-.focus\:ring-rose-500:focus { --tw-ring-color: #14b8a6; }
-.focus\:border-rose-500:focus { border-color: #0f766e; }
+.text-rose-600 { color: #c2410c; }
+.text-rose-500 { color: #dc2626; }
+.text-rose-400 { color: #ea580c; }
+.border-rose-200 { border-color: #fdba74; }
+.border-rose-100 { border-color: #fed7aa; }
+.accent-rose-600 { accent-color: #c2410c; }
+.hover\:bg-rose-700:hover { background-color: #9a3412; }
+.hover\:bg-rose-100:hover { background-color: #ffedd5; }
+.hover\:bg-rose-50:hover { background-color: #fff7ed; }
+.hover\:text-rose-600:hover { color: #c2410c; }
+.hover\:border-rose-200:hover { border-color: #fdba74; }
+.focus\:ring-rose-500:focus { --tw-ring-color: #ea580c; }
+.focus\:border-rose-500:focus { border-color: #c2410c; }
 
 button,
 input,
