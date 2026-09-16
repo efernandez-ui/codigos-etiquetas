@@ -43,7 +43,7 @@ const BarcodeGenerator = () => {
 
   // Fondo y líneas fijos: blanco y negro estricto
   const bgColor = '#ffffff';
-  const lineColor = '#000000';
+  const lineColor = '#172033';
 
   const [errors, setErrors] = useState({});
   const [toastMsg, setToastMsg] = useState("");
@@ -282,9 +282,9 @@ const BarcodeGenerator = () => {
       });
 
       // FORZAR COLOR NEGRO PURO A TODAS LAS BARRAS (Soluciona el problema de Illustrator y PDF)
-      innerJsBarcodeSVG.querySelectorAll<SVGElement>('path, rect, line, text').forEach(el => {
-          el.setAttribute('fill', '#000000');
-          if (el.style) el.style.fill = '#000000';
+        innerJsBarcodeSVG.querySelectorAll<SVGElement>('path, rect, line, text').forEach(el => {
+          el.setAttribute('fill', lineColor);
+          if (el.style) el.style.fill = lineColor;
       });
 
       const barcodeElementsHTML = innerJsBarcodeSVG.innerHTML;
@@ -310,14 +310,14 @@ const BarcodeGenerator = () => {
       if (currentY < 15) currentY = 15;
 
       skuLines.forEach((line) => {
-          svgString += `  <text x="${layout.targetW / 2}" y="${currentY}" font-family="Arial, sans-serif" font-size="${skuFontSize}px" font-weight="bold" fill="#000000" text-anchor="middle" dominant-baseline="hanging">${escapeXML(line)}</text>\n`;
+          svgString += `  <text x="${layout.targetW / 2}" y="${currentY}" font-family="Arial, sans-serif" font-size="${skuFontSize}px" font-weight="bold" fill="${lineColor}" text-anchor="middle" dominant-baseline="hanging">${escapeXML(line)}</text>\n`;
           currentY += skuLineHeight;
       });
 
       if(skuLines.length > 0 && descLines.length > 0) currentY += spacing;
 
       descLines.forEach((line) => {
-          svgString += `  <text x="${layout.targetW / 2}" y="${currentY}" font-family="Arial, sans-serif" font-size="${descFontSize}px" fill="#000000" text-anchor="middle" dominant-baseline="hanging">${escapeXML(line)}</text>\n`;
+          svgString += `  <text x="${layout.targetW / 2}" y="${currentY}" font-family="Arial, sans-serif" font-size="${descFontSize}px" fill="${lineColor}" text-anchor="middle" dominant-baseline="hanging">${escapeXML(line)}</text>\n`;
           currentY += descLineHeight;
       });
 
