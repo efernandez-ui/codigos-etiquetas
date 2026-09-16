@@ -670,7 +670,7 @@ const BarcodeGenerator = () => {
                       {currentValidItems.map((item, index) => (
                         <div key={`preview-${index}`} className="group bg-white border border-zinc-200 rounded-2xl shadow-sm hover:shadow-xl hover:shadow-zinc-200/50 transition-all overflow-hidden flex flex-col sm:flex-row items-center">
                           
-                          <div className="flex-1 p-6 flex items-center justify-center relative min-h-[180px] w-full bg-[length:24px_24px] border-b sm:border-b-0 sm:border-r border-zinc-100 overflow-auto" style={{ backgroundImage: 'radial-gradient(#e4e4e7 1px, transparent 1px)' }}>
+                          <div className="flex-1 p-6 flex items-center justify-center relative min-h-[180px] max-h-[400px] w-full bg-[length:24px_24px] border-b sm:border-b-0 sm:border-r border-zinc-100 overflow-auto" style={{ backgroundImage: 'radial-gradient(#e4e4e7 1px, transparent 1px)' }}>
                             {errors[index] ? (
                               <div className="flex flex-col items-center text-rose-600 text-sm p-4 bg-white/95 backdrop-blur rounded-xl shadow-lg border border-rose-100">
                                 <AlertCircle size={28} className="mb-2 text-rose-500" />
