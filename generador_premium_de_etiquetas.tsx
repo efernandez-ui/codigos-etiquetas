@@ -578,18 +578,18 @@ const BarcodeGenerator = () => {
           
           {/* PANEL IZQUIERDO DE CONFIGURACIÓN */}
           <div className="lg:col-span-4 xl:col-span-3 space-y-6">
-            <div className="bg-white p-6 rounded-2xl shadow-xl shadow-zinc-200/40 border border-zinc-100 max-h-[750px] overflow-y-auto">
-              <div className="flex items-center gap-2 mb-6 text-zinc-800 font-bold text-lg border-b border-zinc-100 pb-4">
+            <div className="bg-white p-4 rounded-2xl shadow-xl shadow-zinc-200/40 border border-zinc-100 max-h-[750px] overflow-hidden">
+              <div className="flex items-center gap-2 mb-4 text-zinc-800 font-bold text-lg border-b border-zinc-100 pb-3">
                 <Settings size={20} className="text-rose-600" />
                     <h2>Diseño Global</h2>
                   </div>
 
-                  <div className="space-y-6">
+                  <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-semibold text-zinc-700 mb-2">
                         Simbología
                       </label>
-                      <select value={format} onChange={(e) => setFormat(e.target.value)} className="w-full px-4 py-2.5 bg-zinc-50 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors text-sm font-medium text-zinc-800 font-mono">
+                      <select value={format} onChange={(e) => setFormat(e.target.value)} className="w-full px-3 py-2 bg-zinc-50 border border-zinc-200 rounded-xl focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-colors text-sm font-medium text-zinc-800 font-mono">
                         <option value="CODE128">CODE 128</option>
                         <option value="EAN13">EAN-13</option>
                         <option value="EAN8">EAN-8</option>
@@ -598,76 +598,82 @@ const BarcodeGenerator = () => {
                       </select>
                     </div>
 
-                    <div className="pt-5 border-t border-zinc-100">
-                      <div className="flex items-center gap-2 mb-4 text-zinc-800 font-semibold">
+                    <div className="pt-3 border-t border-zinc-100">
+                      <div className="flex items-center gap-2 mb-3 text-zinc-800 font-semibold">
                         <Printer size={18} className="text-rose-600"/>
                         <h3>Dimensiones Físicas (cm)</h3>
                       </div>
                       
-                      <div className="mb-4">
-                        <div className="flex justify-between text-sm mb-2 text-zinc-600">
+                      <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <div className="flex justify-between text-xs mb-1 text-zinc-600">
                           <label>Ancho Etiqueta</label>
-                          <span className="font-mono text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded">{labelWidthCm.toFixed(1)} cm</span>
+                          <span className="font-mono text-rose-600 font-bold bg-rose-50 px-1.5 py-0.5 rounded">{labelWidthCm.toFixed(1)} cm</span>
                         </div>
                         <input type="range" min="3" max="14" step="0.5" value={labelWidthCm} onChange={(e) => setLabelWidthCm(parseFloat(e.target.value))} className="w-full accent-rose-600" />
                       </div>
 
-                      <div className="mb-2">
-                        <div className="flex justify-between text-sm mb-2 text-zinc-600">
+                      <div>
+                        <div className="flex justify-between text-xs mb-1 text-zinc-600">
                           <label>Alto Etiqueta</label>
-                          <span className="font-mono text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded">{labelHeightCm.toFixed(1)} cm</span>
+                          <span className="font-mono text-rose-600 font-bold bg-rose-50 px-1.5 py-0.5 rounded">{labelHeightCm.toFixed(1)} cm</span>
                         </div>
                         <input type="range" min="2" max="10" step="0.5" value={labelHeightCm} onChange={(e) => setLabelHeightCm(parseFloat(e.target.value))} className="w-full accent-rose-600" />
                       </div>
+                      </div>
                     </div>
 
-                    <div className="pt-5 border-t border-zinc-100">
-                      <div className="flex items-center gap-2 mb-4 text-zinc-800 font-semibold">
+                    <div className="pt-3 border-t border-zinc-100">
+                      <div className="flex items-center gap-2 mb-3 text-zinc-800 font-semibold">
                         <Maximize size={18} className="text-rose-600"/>
                         <h3>Proporciones del Código de Barras</h3>
                       </div>
                       
-                      <div className="mb-4">
+                      <div className="grid grid-cols-2 gap-3">
+                      <div>
                         <div className="flex justify-between text-xs mb-1 text-zinc-500 font-medium">
                           <label>Ancho de barra (3-15px)</label><span>{barcodeWidthScale}px</span>
                         </div>
                         <input type="range" min="3" max="15" step="1" value={barcodeWidthScale} onChange={(e) => setBarcodeWidthScale(parseInt(e.target.value))} className="w-full accent-rose-600" />
                       </div>
-                      <div className="mb-4">
+                      <div>
                         <div className="flex justify-between text-xs mb-1 text-zinc-500 font-medium">
                           <label>Altura de barra (90-700px)</label><span>{barcodeHeightPx}px</span>
                         </div>
                         <input type="range" min="90" max="700" step="10" value={barcodeHeightPx} onChange={(e) => setBarcodeHeightPx(parseInt(e.target.value))} className="w-full accent-rose-600" />
                       </div>
+                      </div>
                     </div>
 
-                    <div className="pt-5 border-t border-zinc-100">
-                      <div className="flex items-center gap-2 mb-4 text-zinc-800 font-semibold">
+                    <div className="pt-3 border-t border-zinc-100">
+                      <div className="flex items-center gap-2 mb-3 text-zinc-800 font-semibold">
                         <Maximize size={18} className="text-rose-600"/>
                         <h3>Tipografías (15 a 150 px)</h3>
                       </div>
                       
-                      <div className="mb-4">
+                      <div className="grid grid-cols-2 gap-3">
+                      <div>
                         <div className="flex justify-between text-xs mb-1 text-zinc-500 font-medium">
                           <label>Letra SKU</label><span>{skuFontSize}px</span>
                         </div>
                         <input type="range" min="15" max="150" step="1" value={skuFontSize} onChange={(e) => setSkuFontSize(parseInt(e.target.value))} className="w-full accent-rose-600" />
                       </div>
-                      <div className="mb-4">
+                      <div>
                         <div className="flex justify-between text-xs mb-1 text-zinc-500 font-medium">
                           <label>Letra Desc.</label><span>{descFontSize}px</span>
                         </div>
                         <input type="range" min="15" max="150" step="1" value={descFontSize} onChange={(e) => setDescFontSize(parseInt(e.target.value))} className="w-full accent-rose-600" />
                       </div>
-                      <div className="mb-4">
+                      <div>
                         <div className="flex justify-between text-xs mb-1 text-zinc-500 font-medium">
                           <label>Letra Código</label><span>{fontSize}px</span>
                         </div>
                         <input type="range" min="15" max="150" step="1" value={fontSize} onChange={(e) => setFontSize(parseInt(e.target.value))} disabled={!displayValue} className="w-full accent-rose-600 disabled:opacity-30" />
                       </div>
+                      </div>
                     </div>
 
-                    <div className="pt-5 border-t border-zinc-100">
+                    <div className="pt-3 border-t border-zinc-100">
                       <label className="flex items-center gap-3 cursor-pointer text-sm text-zinc-600 font-medium p-2 hover:bg-zinc-50 rounded-lg">
                         <input type="checkbox" checked={displayValue} onChange={(e) => setDisplayValue(e.target.checked)} className="w-4 h-4 text-rose-600 border-zinc-300 rounded focus:ring-rose-500" />
                         Mostrar número inferior
