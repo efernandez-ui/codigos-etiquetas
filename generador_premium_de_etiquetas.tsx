@@ -472,8 +472,8 @@ const BarcodeGenerator = () => {
                 <div className="bg-rose-600 p-2 rounded-lg shadow-md shadow-rose-600/20">
                     <CheckCircle2 size={20} className="text-white"/>
                 </div>
-                <h1 className="font-bold text-xl text-zinc-800 tracking-tight">Print<span className="text-rose-600">Premium</span></h1>
-                <span className="hidden sm:inline-block ml-4 pl-4 border-l border-zinc-200 text-sm font-medium text-zinc-500">Generador y Maquetador</span>
+                <h1 className="font-bold text-xl text-zinc-800 tracking-tight">Códigos y Etiquetas</h1>
+                <span className="hidden sm:inline-block ml-4 pl-4 border-l border-zinc-200 text-sm font-medium text-zinc-500">Generador de códigos de barra y etiquetas de productos</span>
             </div>
             
             <div className="flex items-center gap-3">
