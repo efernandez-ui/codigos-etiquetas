@@ -670,7 +670,7 @@ const BarcodeGenerator = () => {
                       {currentValidItems.map((item, index) => (
                         <div key={`preview-${index}`} className="group bg-white border border-zinc-200 rounded-2xl shadow-sm hover:shadow-xl hover:shadow-zinc-200/50 transition-all overflow-hidden flex flex-col sm:flex-row items-center">
                           
-                          <div className="flex-1 p-6 flex items-center justify-center relative min-h-[180px] max-h-[400px] w-full bg-orange-50 border-b sm:border-b-0 sm:border-r border-zinc-100 overflow-auto">
+                          <div className="flex-1 p-6 flex items-center justify-center relative min-h-[180px] max-h-[400px] w-full bg-orange-50 border-b sm:border-b-0 sm:border-r border-zinc-100 overflow-hidden">
                             {errors[index] ? (
                               <div className="flex flex-col items-center text-rose-600 text-sm p-4 bg-white rounded-xl shadow-lg border border-rose-100">
                                 <AlertCircle size={28} className="mb-2 text-rose-500" />
@@ -678,7 +678,7 @@ const BarcodeGenerator = () => {
                               </div>
                             ) : (
                               <div className="relative p-2 bg-white rounded shadow-sm border border-zinc-100 inline-block transition-transform group-hover:scale-105 duration-300">
-                                  <canvas ref={el => canvasRefs.current[index] = el} className="max-w-full h-auto" />
+                                  <canvas ref={el => canvasRefs.current[index] = el} className="max-w-full max-h-[340px] w-auto h-auto object-contain" />
                               </div>
                             )}
                           </div>
