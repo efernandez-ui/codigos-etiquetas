@@ -20,6 +20,10 @@ body {
   min-height: 100vh;
 }
 
+.bg-warm-gradient {
+  background: linear-gradient(135deg, #fff1f2 0%, #fed7aa 48%, #ffedd5 100%);
+}
+
 .bg-rose-600 { background-color: #c2410c; }
 .bg-rose-700 { background-color: #9a3412; }
 .bg-rose-300 { background-color: #fdba74; }

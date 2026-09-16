@@ -43,7 +43,7 @@ const BarcodeGenerator = () => {
 
   // Fondo y líneas fijos: blanco y negro estricto
   const bgColor = '#ffffff';
-  const lineColor = '#7f1d1d';
+  const lineColor = '#000000';
 
   const [errors, setErrors] = useState({});
   const [toastMsg, setToastMsg] = useState("");
@@ -454,7 +454,7 @@ const BarcodeGenerator = () => {
   const currentValidItems = items.filter(item => item.barcodeVal.trim() !== '' || item.sku.trim() !== '');
 
   return (
-    <div className="flex h-screen w-full bg-orange-50 font-sans text-zinc-800 overflow-hidden">
+    <div className="flex h-screen w-full bg-warm-gradient font-sans text-zinc-800 overflow-hidden">
       
       {toastMsg && (
         <div className="fixed bottom-6 right-6 bg-zinc-900 text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-2 z-50 animate-bounce">
