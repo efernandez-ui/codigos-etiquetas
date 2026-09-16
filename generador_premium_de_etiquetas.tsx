@@ -26,6 +26,7 @@ const BarcodeGenerator = () => {
   ]);
   
   const [format, setFormat] = useState('CODE128');
+  const [generationMode, setGenerationMode] = useState('label');
   
   // Sliders de proporciones de las barras internas (Ancho: 3 a 15, Alto: 90 a 700)
   const [barcodeWidthScale, setBarcodeWidthScale] = useState(3);
@@ -145,7 +146,7 @@ const BarcodeGenerator = () => {
           width: barcodeWidthScale,
           height: barcodeHeightPx,
           fontSize: fontSize,
-          displayValue: displayValue,
+          displayValue: generationMode === 'barcode' || displayValue,
           font: "Arial",
           background: '#ffffff00',
           lineColor: lineColor,
@@ -170,9 +171,9 @@ const BarcodeGenerator = () => {
             const maxTextWidth = targetW - 40; 
 
             ctx.font = `bold ${skuFontSize}px Arial`;
-            const skuLines = getLines(ctx, sku, maxTextWidth);
+            const skuLines = generationMode === 'label' ? getLines(ctx, sku, maxTextWidth) : [];
             ctx.font = `${descFontSize}px Arial`;
-            const descLines = getLines(ctx, desc, maxTextWidth);
+            const descLines = generationMode === 'label' ? getLines(ctx, desc, maxTextWidth) : [];
 
             const skuLineHeight = skuFontSize * 1.2;
             const descLineHeight = descFontSize * 1.2;
@@ -240,7 +241,7 @@ const BarcodeGenerator = () => {
       }
     });
     setErrors(newErrors);
-  }, [items, format, barcodeWidthScale, barcodeHeightPx, fontSize, displayValue, skuFontSize, descFontSize, labelWidthCm, labelHeightCm, isLoaded]);
+  }, [items, format, generationMode, barcodeWidthScale, barcodeHeightPx, fontSize, displayValue, skuFontSize, descFontSize, labelWidthCm, labelHeightCm, isLoaded]);
 
   const downloadFile = (data, filename, type) => {
     const link = document.createElement('a');
@@ -316,9 +317,9 @@ const BarcodeGenerator = () => {
       const maxTextWidth = layout.targetW - 40;
       const dummyCanvas = document.createElement('canvas').getContext('2d');
       dummyCanvas.font = `bold ${skuFontSize}px Arial`;
-      const skuLines = getLines(dummyCanvas, items[index].sku, maxTextWidth);
+      const skuLines = generationMode === 'label' ? getLines(dummyCanvas, items[index].sku, maxTextWidth) : [];
       dummyCanvas.font = `${descFontSize}px Arial`;
-      const descLines = getLines(dummyCanvas, items[index].desc, maxTextWidth);
+      const descLines = generationMode === 'label' ? getLines(dummyCanvas, items[index].desc, maxTextWidth) : [];
 
       const skuLineHeight = skuFontSize * 1.2;
       const descLineHeight = descFontSize * 1.2;
@@ -599,6 +600,20 @@ const BarcodeGenerator = () => {
                     </div>
 
                     <div className="pt-3 border-t border-zinc-100">
+                      <label className="block text-sm font-semibold text-zinc-700 mb-2">
+                        Tipo de salida
+                      </label>
+                      <div className="grid grid-cols-2 gap-2">
+                        <button type="button" onClick={() => setGenerationMode('barcode')} className={`px-2 py-2 text-xs font-semibold rounded-lg border transition-colors ${generationMode === 'barcode' ? 'bg-rose-600 text-white border-rose-600' : 'bg-white text-zinc-600 border-zinc-200 hover:bg-rose-50 hover:text-rose-600'}`}>
+                          Solo código
+                        </button>
+                        <button type="button" onClick={() => setGenerationMode('label')} className={`px-2 py-2 text-xs font-semibold rounded-lg border transition-colors ${generationMode === 'label' ? 'bg-rose-600 text-white border-rose-600' : 'bg-white text-zinc-600 border-zinc-200 hover:bg-rose-50 hover:text-rose-600'}`}>
+                          Etiqueta completa
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="pt-3 border-t border-zinc-100">
                       <div className="flex items-center gap-2 mb-3 text-zinc-800 font-semibold">
                         <Printer size={18} className="text-rose-600"/>
                         <h3>Dimensiones Físicas (cm)</h3>
@@ -668,14 +683,14 @@ const BarcodeGenerator = () => {
                         <div className="flex justify-between text-xs mb-1 text-zinc-500 font-medium">
                           <label>Letra Código</label><span>{fontSize}px</span>
                         </div>
-                        <input type="range" min="15" max="150" step="1" value={fontSize} onChange={(e) => setFontSize(parseInt(e.target.value))} disabled={!displayValue} className="w-full accent-rose-600 disabled:opacity-30" />
+                        <input type="range" min="15" max="150" step="1" value={fontSize} onChange={(e) => setFontSize(parseInt(e.target.value))} disabled={!displayValue && generationMode !== 'barcode'} className="w-full accent-rose-600 disabled:opacity-30" />
                       </div>
                       </div>
                     </div>
 
                     <div className="pt-3 border-t border-zinc-100">
                       <label className="flex items-center gap-3 cursor-pointer text-sm text-zinc-600 font-medium p-2 hover:bg-zinc-50 rounded-lg">
-                        <input type="checkbox" checked={displayValue} onChange={(e) => setDisplayValue(e.target.checked)} className="w-4 h-4 text-rose-600 border-zinc-300 rounded focus:ring-rose-500" />
+                        <input type="checkbox" checked={generationMode === 'barcode' || displayValue} onChange={(e) => setDisplayValue(e.target.checked)} disabled={generationMode === 'barcode'} className="w-4 h-4 text-rose-600 border-zinc-300 rounded focus:ring-rose-500 disabled:opacity-60" />
                         Mostrar número inferior
                       </label>
                     </div>
