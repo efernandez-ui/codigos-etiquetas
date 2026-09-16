@@ -494,7 +494,7 @@ const BarcodeGenerator = () => {
 
         <div className="p-8 max-w-[1600px] mx-auto w-full space-y-8 lg:grid lg:grid-cols-12 lg:gap-8 lg:space-y-0">
             
-          <div className="lg:col-start-4 lg:col-span-8 xl:col-span-9 lg:row-start-1 bg-white rounded-2xl shadow-xl shadow-zinc-200/40 border border-zinc-200 overflow-hidden">
+            <div className="lg:col-start-4 lg:col-span-8 xl:col-span-9 lg:row-start-1 lg:self-start bg-white rounded-2xl shadow-xl shadow-zinc-200/40 border border-zinc-200 overflow-hidden">
                 <div className="p-4 border-b border-zinc-100 bg-zinc-50 flex items-center justify-between">
                     <div className="flex items-center gap-2 text-zinc-700 font-semibold">
                         <Table size={18} className="text-rose-600" />
