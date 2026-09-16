@@ -492,9 +492,9 @@ const BarcodeGenerator = () => {
             </div>
         </header>
 
-        <div className="p-8 max-w-[1600px] mx-auto w-full space-y-8">
+        <div className="p-8 max-w-[1600px] mx-auto w-full space-y-8 lg:grid lg:grid-cols-12 lg:gap-8 lg:space-y-0">
             
-            <div className="bg-white rounded-2xl shadow-xl shadow-zinc-200/40 border border-zinc-200 overflow-hidden">
+          <div className="lg:col-start-4 lg:col-span-8 xl:col-span-9 lg:row-start-1 bg-white rounded-2xl shadow-xl shadow-zinc-200/40 border border-zinc-200 overflow-hidden">
                 <div className="p-4 border-b border-zinc-100 bg-zinc-50 flex items-center justify-between">
                     <div className="flex items-center gap-2 text-zinc-700 font-semibold">
                         <Table size={18} className="text-rose-600" />
@@ -553,10 +553,10 @@ const BarcodeGenerator = () => {
             </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 xl:gap-8">
+        <div className="grid grid-cols-1 lg:contents">
           
           {/* PANEL IZQUIERDO DE CONFIGURACIÓN */}
-          <div className="lg:col-span-4 xl:col-span-3 space-y-6">
+          <div className="lg:col-start-1 lg:col-span-4 xl:col-span-3 lg:row-start-1 space-y-6">
             <div className="bg-white p-6 rounded-2xl shadow-xl shadow-zinc-200/40 border border-zinc-100">
               <div className="flex items-center gap-2 mb-6 text-zinc-800 font-bold text-lg border-b border-zinc-100 pb-4">
                 <Settings size={20} className="text-rose-600" />
@@ -658,7 +658,7 @@ const BarcodeGenerator = () => {
               </div>
 
               {/* PANEL DERECHO DE PREVISUALIZACIÓN */}
-              <div className="lg:col-span-8 xl:col-span-9 space-y-6">
+              <div className="lg:col-start-4 lg:col-span-8 xl:col-span-9 lg:row-start-2 space-y-6">
                   {currentValidItems.length === 0 ? (
                     <div className="h-[400px] flex flex-col items-center justify-center text-zinc-400 p-6 text-center border-2 border-dashed border-zinc-200 rounded-2xl bg-white">
                       <List size={48} className="mb-4 opacity-20" />
