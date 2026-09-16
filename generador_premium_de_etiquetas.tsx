@@ -50,6 +50,7 @@ const BarcodeGenerator = () => {
   const [warnings, setWarnings] = useState({});
   const [toastMsg, setToastMsg] = useState("");
   const [isZipping, setIsZipping] = useState(false);
+  const [isPrinting, setIsPrinting] = useState(false);
   
   const canvasRefs = useRef([]);
   const hiddenSvgContainerRef = useRef(null);
@@ -468,6 +469,63 @@ const BarcodeGenerator = () => {
     }
   };
 
+  const handlePrintA4 = async () => {
+    const validItems = items.filter(item => item.barcodeVal.trim() !== '' || item.sku.trim() !== '');
+    const renderableIndices = validItems.map((_, idx) => idx).filter(idx => !errors[idx] && canvasRefs.current[idx]);
+    const pageWidthCm = 21;
+    const pageHeightCm = 29.7;
+    const marginCm = 0.5;
+    const gapCm = 0.2;
+
+    if (renderableIndices.length === 0) {
+      showToast("No hay etiquetas válidas para imprimir.");
+      return;
+    }
+
+    if (labelWidthCm > pageWidthCm - marginCm * 2 || labelHeightCm > pageHeightCm - marginCm * 2) {
+      showToast("El tamaño seleccionado no cabe en una hoja A4.");
+      return;
+    }
+
+    const columns = Math.floor((pageWidthCm - marginCm * 2 + gapCm) / (labelWidthCm + gapCm));
+    const rows = Math.floor((pageHeightCm - marginCm * 2 + gapCm) / (labelHeightCm + gapCm));
+    const labelsPerPage = columns * rows;
+    const usedWidth = columns * labelWidthCm + (columns - 1) * gapCm;
+    const usedHeight = rows * labelHeightCm + (rows - 1) * gapCm;
+    const startX = (pageWidthCm - usedWidth) / 2;
+    const startY = (pageHeightCm - usedHeight) / 2;
+
+    setIsPrinting(true);
+    showToast("Preparando PDF A4...");
+
+    try {
+      const doc = new jsPDF({ orientation: 'p', unit: 'cm', format: 'a4' });
+
+      renderableIndices.forEach((index, position) => {
+        if (position > 0 && position % labelsPerPage === 0) doc.addPage('a4', 'p');
+
+        const positionOnPage = position % labelsPerPage;
+        const column = positionOnPage % columns;
+        const row = Math.floor(positionOnPage / columns);
+        const x = startX + column * (labelWidthCm + gapCm);
+        const y = startY + row * (labelHeightCm + gapCm);
+        doc.addImage(canvasRefs.current[index].toDataURL('image/png'), 'PNG', x, y, labelWidthCm, labelHeightCm);
+        doc.setDrawColor(190, 190, 190);
+        doc.setLineWidth(0.01);
+        doc.setLineDashPattern([0.12, 0.08], 0);
+        doc.rect(x, y, labelWidthCm, labelHeightCm, 'S');
+      });
+
+      doc.save(`etiquetas-A4-${labelWidthCm}x${labelHeightCm}cm.pdf`);
+      showToast("PDF A4 preparado correctamente.");
+    } catch (err) {
+      console.error("Error al generar PDF A4:", err);
+      showToast("Error al generar el PDF A4.");
+    } finally {
+      setIsPrinting(false);
+    }
+  };
+
   const showToast = (msg) => {
     setToastMsg(msg);
     setTimeout(() => setToastMsg(""), 3000);
@@ -508,9 +566,9 @@ const BarcodeGenerator = () => {
                 {isZipping ? "Empaquetando ZIP..." : "Descargar Todo (ZIP)"}
               </button>
               
-              <div className="px-4 py-1.5 bg-rose-50 text-rose-600 text-sm font-semibold rounded-full border border-rose-100 flex items-center gap-2">
-                  <Printer size={16}/> A Medida
-              </div>
+                <button onClick={handlePrintA4} disabled={isPrinting || currentValidItems.length === 0} className="flex items-center gap-2 px-4 py-2 bg-rose-50 hover:bg-rose-100 disabled:opacity-50 text-rose-600 text-sm font-semibold rounded-xl border border-rose-100 transition-colors" title="Imprimir todas las etiquetas en hojas A4">
+                  {isPrinting ? <Loader2 size={16} className="animate-spin" /> : <Printer size={16}/>} {isPrinting ? "Preparando A4..." : "Imprimir A4"}
+                </button>
             </div>
         </header>
 
