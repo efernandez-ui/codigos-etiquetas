@@ -47,6 +47,23 @@ function barcodeFor(item: Item): { value: string; markup: string; sourceWidth: n
   } catch { return { value, markup: '', sourceWidth: 0, sourceHeight: 0, error: 'Código de barras inválido para CODE 128.' }; }
 }
 
+function svgToPng(svg: string, pixelWidth: number, pixelHeight: number): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml;charset=utf-8' }));
+    image.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = pixelWidth;
+      canvas.height = pixelHeight;
+      canvas.getContext('2d')?.drawImage(image, 0, 0, pixelWidth, pixelHeight);
+      URL.revokeObjectURL(url);
+      resolve(canvas.toDataURL('image/png'));
+    };
+    image.onerror = () => { URL.revokeObjectURL(url); reject(new Error('No se pudo renderizar la etiqueta.')); };
+    image.src = url;
+  });
+}
+
 function createSvg(item: Item, width: number, height: number, barcode: ReturnType<typeof barcodeFor>, design: Design, logo: Logo | null, logoSize: number): string {
   const H = 1000 * height / width;
   const sy = (n: number) => n * H / 1000;
@@ -82,7 +99,9 @@ async function pdfBytes(svg: string, width: number, height: number, logo: Logo |
   const doc = new jsPDF({ orientation: width > height ? 'l' : 'p', unit: 'cm', format: [width, height] });
   const element = new DOMParser().parseFromString(svg, 'image/svg+xml').documentElement;
   element.querySelector('image')?.remove();
-  await doc.svg(element, { x: 0, y: 0, width, height });
+  const renderedSvg = new XMLSerializer().serializeToString(element);
+  const png = await svgToPng(renderedSvg, 2000, Math.round(2000 * height / width));
+  doc.addImage(png, 'PNG', 0, 0, width, height);
   if (logo) {
     const boxWidth = width * .26 * logoSize / 100;
     const boxHeight = height * .125 * logoSize / 100;

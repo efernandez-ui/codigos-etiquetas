@@ -9,6 +9,22 @@ import {
   Plus, Trash2, Eraser, Printer, FileCode2, Archive, Loader2, FileText
 } from 'lucide-react';
 
+const svgToPng = (svgString): Promise<string> => new Promise((resolve, reject) => {
+  const image = new Image();
+  const url = URL.createObjectURL(new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' }));
+  image.onload = () => {
+    const viewBox = svgString.match(/viewBox="[^"]+"/i)?.[0].match(/[-.\d]+/g)?.map(Number) || [0, 0, 1, 1];
+    const canvas = document.createElement('canvas');
+    canvas.width = 2000;
+    canvas.height = Math.round(2000 * viewBox[3] / viewBox[2]);
+    canvas.getContext('2d')?.drawImage(image, 0, 0, canvas.width, canvas.height);
+    URL.revokeObjectURL(url);
+    resolve(canvas.toDataURL('image/png'));
+  };
+  image.onerror = () => { URL.revokeObjectURL(url); reject(new Error('No se pudo renderizar la etiqueta.')); };
+  image.src = url;
+});
+
 const BarcodeGenerator = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   
@@ -377,13 +393,8 @@ const BarcodeGenerator = () => {
 
           const parserError = svgElement.querySelector("parsererror");
           if (parserError) throw new Error("SVG parse error");
-
-          await doc.svg(svgElement, {
-              x: 0,
-              y: 0,
-              width: labelWidthCm,
-              height: labelHeightCm
-          });
+            const png = await svgToPng(new XMLSerializer().serializeToString(svgElement));
+            doc.addImage(png, 'PNG', 0, 0, labelWidthCm, labelHeightCm);
 
           doc.save(`etiqueta-${getSafeName(index)}-${labelWidthCm}x${labelHeightCm}cm.pdf`);
       } catch (err) {
@@ -448,7 +459,8 @@ const BarcodeGenerator = () => {
                   const svgElement = parser.parseFromString(svgString, "image/svg+xml").documentElement;
                   
                   if (!svgElement.querySelector("parsererror")) {
-                      await doc.svg(svgElement, { x: 0, y: 0, width: labelWidthCm, height: labelHeightCm });
+                      const png = await svgToPng(new XMLSerializer().serializeToString(svgElement));
+                      doc.addImage(png, 'PNG', 0, 0, labelWidthCm, labelHeightCm);
                       pdfFolder.file(`etiqueta-${safeName}-${labelWidthCm}x${labelHeightCm}cm.pdf`, doc.output('blob'));
                   }
               } catch(e) {
